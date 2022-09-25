@@ -1,0 +1,16 @@
+<h1>Blogs</h1>
+
+<ul>
+    <% @blogs.each do |blog| %>
+        <li>
+            <a href="<%= blog_path(blog) %>">
+                <h3>#<%= blog.id %>   <%= blog.title %></h3>
+            </a>
+            <h4><%= blog.content %></h4>
+        </li>
+    <% end %>
+</ul>
+
+<h3>
+    <%= link_to "New Blog", new_blog_path %>
+</h3>
