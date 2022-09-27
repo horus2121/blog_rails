@@ -1,7 +1,16 @@
 import React from 'react';
-import { Link, Text, Button, Box, LinkOverlay, useColorMode } from '@chakra-ui/react';
+import { Link, Button, Box, LinkOverlay } from '@chakra-ui/react';
 
-type ChakraLinkProps = any
+interface ChakraLinkProps {
+    href: any,
+    ChakraComponent?: any,
+    children: React.ReactNode,
+    chakraLinkProps?: any,
+    noUnderline?: boolean,
+    overlay?: boolean,
+    sx?: any,
+    onClick?: () => void
+}
 
 export const ChakraLink = ({ href, ChakraComponent = Box, children, chakraLinkProps = {}, noUnderline, overlay, ...props }: ChakraLinkProps) => {
 
@@ -19,7 +28,7 @@ export const ChakraLink = ({ href, ChakraComponent = Box, children, chakraLinkPr
     )
 }
 
-type ChakraButtonLinkProps = any
+interface ChakraButtonLinkProps extends ChakraLinkProps { }
 
 export const ChakraButtonLink = (props: ChakraButtonLinkProps) => {
     return (

@@ -15,7 +15,10 @@ import {
 import { AppDrawer } from './AppDrawer';
 import { ChakraLink } from './ChakraLink';
 
-type CustomIconButtonProps = any
+interface CustomIconButtonProps {
+    Icon: any,
+    onClick?: () => void
+}
 
 const CustomIconButton = ({ Icon, ...props }: CustomIconButtonProps) => {
     return <IconButton aria-label={''} icon={<Icon />} {...props} size='lg' ml='1rem' />

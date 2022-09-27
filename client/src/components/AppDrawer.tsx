@@ -14,7 +14,9 @@ import {
 import { ChakraLink } from './ChakraLink';
 import { ToggleColorModeButton } from './ToggleColorModeButton';
 
-type DrawerListProps = any
+interface DrawerListProps {
+    onClose?: () => void
+}
 
 const DrawerList = ({ onClose }: DrawerListProps) => {
     const listItems = [
@@ -23,8 +25,8 @@ const DrawerList = ({ onClose }: DrawerListProps) => {
             path: '/'
         },
         {
-            name: 'Anywhere',
-            path: '/whatever'
+            name: 'BlogList',
+            path: '/blogs'
         }
     ]
 
@@ -48,7 +50,10 @@ const DrawerList = ({ onClose }: DrawerListProps) => {
     )
 }
 
-type AppDrawerProps = any
+interface AppDrawerProps {
+    isOpen: boolean,
+    onClose: () => void
+}
 
 export const AppDrawer = ({ isOpen, onClose }: AppDrawerProps) => {
     return (

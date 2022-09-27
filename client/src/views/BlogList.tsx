@@ -1,6 +1,6 @@
 import { BlogPreviewList } from '../components/Blog/BlogPreviewList';
 
-export const Home = () => {
+export const BlogList = () => {
     return (
         <BlogPreviewList />
     )
