@@ -3,22 +3,21 @@ import { useState, useEffect } from 'react';
 
 import { BlogPreviewCard } from './BlogPreviewCard';
 
-interface Blog {
+export interface Blog {
     title: String,
     content: Text,
 }
 
-interface Blogs {
-    blog: Blog[]
-}
-
 export const BlogPreviewList = () => {
-    const [blogs, setBlogs] = useState<Blogs>({} as Blogs)
+    const [blogList, setBlogList] = useState<Blog[]>([])
 
     useEffect(() => {
-        fetch('http://localhost:3000/blogs/1', { mode: 'no-cors' })
+        fetch('/blogs', { mode: 'no-cors' })
             .then(res => res.json())
-            .then(json => console.log(json))
+            .then(json => {
+                console.log(json)
+                setBlogList(json)
+            })
             .catch(error => console.log(error.message))
 
     }, [])
@@ -36,8 +35,8 @@ export const BlogPreviewList = () => {
                 </Heading>
             </Flex>
 
-            {Array(10).fill(0).map((index) => (
-                <BlogPreviewCard key={index} />
+            {blogList.map((blog, index) => (
+                <BlogPreviewCard key={index} blog={blog} />
             ))}
         </Box>
     )

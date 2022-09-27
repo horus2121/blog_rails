@@ -2,7 +2,13 @@ import { Flex, Box, HStack, VStack, Text, Heading, LinkBox, LinkOverlay, Button,
 
 import { ChakraLink, ChakraButtonLink } from '../ChakraLink';
 
-export const BlogPreviewCard = () => {
+import { Blog } from './BlogPreviewList';
+
+interface BlogPreviewCardProps {
+    blog: Blog
+}
+
+export const BlogPreviewCard = ({ blog }: BlogPreviewCardProps) => {
     return (
         <VStack as={LinkBox} spacing='1rem' mb='2rem'>
             <Box>
@@ -16,6 +22,7 @@ export const BlogPreviewCard = () => {
             <Heading>
             </Heading>
             <ChakraLink ChakraComponent={Heading} href='/something' overlay>
+                {blog.title}
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </ChakraLink>
 

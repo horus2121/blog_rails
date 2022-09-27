@@ -1,8 +1,12 @@
 class BlogsController < ApplicationController
     before_action :set_blog, only: [:show, :edit, :update, :destroy]
 
+    rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found
+    rescue_from ActiveRecord::RecordInvalid, with: :render_record_invalid
+
     def index
         @blogs = Blog.all
+        render json: @blogs
     end
 
     def show
@@ -47,6 +51,14 @@ class BlogsController < ApplicationController
 
     def blog_params
         params.require(:blog).permit(:title, :content)
+    end
+
+    def render_record_not_found
+        render json: { status: "Record Not Found." }
+    end
+
+    def render_record_invalid
+        render json: { status: "Record Invalid." }
     end
 
 end

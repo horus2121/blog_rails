@@ -13,7 +13,7 @@ export const ChakraLink = ({ href, ChakraComponent = Box, children, chakraLinkPr
     }
 
     return (
-        <LinkComponent href={href} passHref {...chakraLinkProps}>
+        <LinkComponent href={href} {...chakraLinkProps}>
             <ChakraComponent {...props}>{children}</ChakraComponent>
         </LinkComponent>
     )
