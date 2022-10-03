@@ -33,9 +33,7 @@ export const BlogPreviewCard = ({ blog }: BlogPreviewCardProps) => {
             </HStack>
 
             <Text noOfLines={3}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta sint vero quisquam reiciendis molestias fuga obcaecati, ipsa, corrupti quia tenetur nam et repellendus ipsum adipisci hic quasi architecto ipsam aliquid!
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati quisquam sit, quidem nostrum incidunt natus fugiat maiores in illo magnam adipisci corporis, sapiente nulla eaque voluptas odio et, illum repudiandae!
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem adipisci sequi assumenda perferendis natus ad in inventore modi deserunt, esse vel sit autem veniam expedita numquam! Rerum aut totam doloribus?
+                {blog.description + ""}
             </Text>
 
             {/* <Button textTransform='uppercase'>

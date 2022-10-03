@@ -10,21 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_01_092704) do
+ActiveRecord::Schema.define(version: 2022_10_02_110729) do
 
   create_table "blogs", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.text "description"
+    t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
     t.string "content"
-    t.integer "commentable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "commentable_type"
+    t.integer "user_id"
+    t.integer "blog_id"
+    t.index ["blog_id"], name: "index_comments_on_blog_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,4 +40,7 @@ ActiveRecord::Schema.define(version: 2022_10_01_092704) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "blogs", "users"
+  add_foreign_key "comments", "blogs"
+  add_foreign_key "comments", "users"
 end

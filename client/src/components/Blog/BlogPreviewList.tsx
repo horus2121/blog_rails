@@ -5,6 +5,7 @@ import { BlogPreviewCard } from './BlogPreviewCard';
 
 export interface Blog {
     title: String,
+    description: Text,
     content: Text,
 }
 
