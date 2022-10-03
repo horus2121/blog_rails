@@ -57,6 +57,14 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  # This also configures session_options for use below
+  config.session_store :cookie_store, key: '_interslice_session'
+
+  # Required for all session management (regardless of session_store)
+  config.middleware.use ActionDispatch::Cookies
+
+  config.middleware.use config.session_store, config.session_options
+
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque

@@ -73,4 +73,13 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # This also configures session_options for use below
+  config.session_store :cookie_store, key: '_interslice_session'
+
+  # Required for all session management (regardless of session_store)
+  config.middleware.use ActionDispatch::Cookies
+
+  config.middleware.use config.session_store, config.session_options
+
 end
