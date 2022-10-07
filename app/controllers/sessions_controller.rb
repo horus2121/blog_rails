@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
         if user&.authenticate(params[:password])
             session[:current_user_id] = user.id
 
-            render json: user, status: :created
+            render json: { logged_in: true, id: user.id , username: user.username, email: user.email}, status: :created
         else
             render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end
@@ -22,6 +22,12 @@ class SessionsController < ApplicationController
         session.delete :current_user_id
 
         render json: { success: "Session deleted."}
+    end
+
+    private
+
+    def session_params
+        params.require(:user).permit(:username, :email, :password)
     end
 
 end

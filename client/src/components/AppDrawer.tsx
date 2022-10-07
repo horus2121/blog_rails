@@ -26,7 +26,7 @@ const DrawerList = ({ onClose }: DrawerListProps) => {
         },
         {
             name: 'BlogList',
-            path: '/blogs'
+            path: '/bloglist'
         }
     ]
 
