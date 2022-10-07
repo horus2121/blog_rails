@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { RootState } from './redux/store';
+import { RootState } from './state/store';
 
 import { Login, User } from './views/Login';
 import { Layout } from './views/Layout';

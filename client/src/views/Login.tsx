@@ -11,8 +11,8 @@ import { bindActionCreators } from '@reduxjs/toolkit'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { actionCreators } from '../redux'
-import { RootState } from '../redux/store'
+import { actionCreators } from '../state'
+import { RootState } from '../state/store'
 
 export interface User {
     logged_in?: Boolean,
