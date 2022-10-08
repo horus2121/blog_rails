@@ -10,6 +10,7 @@ import {
 import { bindActionCreators } from '@reduxjs/toolkit'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../state/store'
 
 import { actionCreators } from '../state'
 import { RootState } from '../state/store'
@@ -26,7 +27,7 @@ export const Login = () => {
     const [username, setUsername] = useState<String>({} as String)
     const [password, setPassword] = useState<String>({} as String)
 
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const { loginUser } = bindActionCreators(actionCreators, dispatch)
     const user = useSelector((state: RootState) => state.user)
 
@@ -35,7 +36,7 @@ export const Login = () => {
 
         let data = { username, password }
 
-        loginUser(data)
+        dispatch(loginUser(data))
     }
 
     return (

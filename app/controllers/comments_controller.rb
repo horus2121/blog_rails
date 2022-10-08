@@ -1,21 +1,28 @@
 class CommentsController < ApplicationController
+    before_action :set_blog
 
     def create
-        @blog = Blog.find(params[:blog_id])
-        @comment = @blog.comments.create(comment_params)
+        comment = blog.comments.create!(comment_params)
 
-        redirect_to blog_path(@blog)
+        if comment
+            render json: { comment: comment}, status: :created
+        else
+            render json: { errors: comment.errors.full_messages }, status: :unprocessable_entity
+        end
     end
 
     def destroy
-        @blog = Blog.find(params[:blog_id])
-        @comment = @blog.comments.find(params[:id])
-        @comment.destroy
+        comment = blog.comments.find(params[:id])
+        comment.destroy
 
-        redirect_to blog_path(@blog), status: :see_other
+        render json: { success: "Comment destroyed."}, status: :see_other
     end
 
     private
+
+    def set_blog
+        blog = Blog.find(params[:blog_id])
+    end
 
     def comment_params
         params.require(:comment).permit(:content)

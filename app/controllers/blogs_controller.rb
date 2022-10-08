@@ -1,52 +1,47 @@
 class BlogsController < ApplicationController
-    before_action :set_blog, only: [:show, :edit, :update, :destroy]
+    before_action :set_blog, only: [:show, :update, :destroy]
 
     rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found
     rescue_from ActiveRecord::RecordInvalid, with: :render_record_invalid
 
     def index
-        @blogs = Blog.all
-        render json: @blogs
+        blogs = Blog.all
+
+        render json: { blogs: blogs }, status: :created
     end
 
     def show
-    end
-
-    def new
-        @blog = Blog.new
+        render json: { user: blog.user, blog: blog }, status: :created
     end
 
     def create
-        @blog = Blog.new(blog_params)
+        blog = Blog.create!(blog_params)
 
-        if @blog.save
-            redirect_to blog_path(@blog), notice: "Blog has been successfully created."
+        if blog
+            render json: { user: blog.user, blog: blog }, status: :created
         else
-            render :new, status: :unprocessable_entity
+            render json: { errors: blog.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
-    def edit
-    end
-
     def update
-        if @blog.update(blog_params)
-            redirect_to blog_path(@blog), notice: "Blog has been successfully updated."
+        if blog.update(blog_params)
+            render json: { user: blog.user, blog: blog }, status: :created
         else
-            render :edit, status: :unprocessable_entity
+            render json: { errors: blog.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @blog.destroy
+        blog.destroy
 
-        redirect_to blogs_path, status: :see_other, notice: "Blog has been successfully destroyed."
+        render json: { success: "Blog destroyed."}, status: :see_other
     end
 
     private
 
     def set_blog
-        @blog = Blog.find(params[:id])
+        blog = Blog.find(params[:id])
     end
 
     def blog_params

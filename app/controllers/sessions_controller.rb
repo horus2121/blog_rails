@@ -11,7 +11,11 @@ class SessionsController < ApplicationController
         if user&.authenticate(params[:password])
             session[:current_user_id] = user.id
 
-            render json: { logged_in: true, id: user.id , username: user.username, email: user.email}, status: :created
+            render json: { 
+                logged_in: true, 
+                user: user 
+            }, 
+                status: :created
         else
             render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end

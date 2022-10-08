@@ -2,12 +2,12 @@ class UsersController < ApplicationController
     skip_before_action :logged_in?, only: [:create]
 
     def create
-        user = User.create(user_params)
+        user = User.create!(user_params)
 
-        if user.save
-            session[:user_id] = user.id
+        if user
+            session[:current_user_id] = user.id
 
-            render json: user, status: :created
+            render json: { user: user }, status: :created
         else
             render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     def show
         user = User.find_by(id: session[:user_id])
 
-        render json: user, status: :created
+        render json: { user: user }, status: :created
     end
 
     private
