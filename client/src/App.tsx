@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { RootState } from './state/store';
+import { RootState } from './features/store';
 
-import { Login, User } from './views/Login';
+import { Login } from './views/Login';
 import { Layout } from './views/Layout';
 import { Home } from './views/Home';
 import { BlogList } from './views/BlogList';
@@ -13,17 +13,8 @@ import { NoPage } from './views/NoPage';
 import { Signup } from './views/Signup';
 import { Profile } from './views/Profile';
 
-
-
 export const App = () => {
-  const [user, setUser] = useState<User>({} as User)
-  const userData = useSelector((state: RootState) => state.user)
-
-  useEffect(() => {
-
-    setUser(userData)
-    console.log(user)
-  })
+  const user = useSelector((state: RootState) => state.users)
 
   return (
     <Router>
@@ -31,11 +22,11 @@ export const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/' element={<Layout />}>
-          <Route index element={user.username ? <Home /> : <Login />} />
-          <Route path='me' element={<Profile />} />
-          <Route path='bloglist' element={<BlogList />} />
-          <Route path='blog' element={<Blog />} />
-          <Route path='*' element={<NoPage />} />
+          <Route index element={user.isLoggedIn ? <Home /> : <Login />} />
+          <Route path='me' element={user.isLoggedIn ? <Profile /> : <Login />} />
+          <Route path='bloglist' element={user.isLoggedIn ? <BlogList /> : <Login />} />
+          <Route path='blog' element={user.isLoggedIn ? <Blog /> : <Login />} />
+          <Route path='*' element={user.isLoggedIn ? <NoPage /> : <Login />} />
         </Route>
       </Routes>
     </Router>

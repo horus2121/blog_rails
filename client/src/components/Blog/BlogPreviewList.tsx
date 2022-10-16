@@ -13,13 +13,15 @@ export const BlogPreviewList = () => {
     const [blogList, setBlogList] = useState<Blog[]>([])
 
     useEffect(() => {
-        fetch('/blogs', { mode: 'no-cors' })
-            .then(res => res.json())
-            .then(json => {
-                console.log(json)
-                setBlogList(json)
-            })
-            .catch(error => console.log(error.message))
+
+        const fetchBlogList = async () => {
+            const res = await fetch('/blogs', { mode: 'no-cors' })
+            const json = res.json()
+            return json
+        }
+        console.log(blogList)
+
+        fetchBlogList().then(json => setBlogList(json))
 
     }, [])
 

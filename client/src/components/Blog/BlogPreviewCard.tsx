@@ -1,4 +1,4 @@
-import { Flex, Box, HStack, VStack, Text, Heading, LinkBox, LinkOverlay, Button, Image } from '@chakra-ui/react';
+import { Box, HStack, VStack, Text, Heading, LinkBox, Image } from '@chakra-ui/react';
 
 import { ChakraLink, ChakraButtonLink } from '../ChakraLink';
 

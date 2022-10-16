@@ -7,43 +7,37 @@ import {
     FormHelperText,
     Container,
 } from '@chakra-ui/react'
-import { bindActionCreators } from '@reduxjs/toolkit'
+
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../state/store'
+import { AppDispatch } from '../features/store'
 
-import { actionCreators } from '../state'
-import { RootState } from '../state/store'
-
-export interface User {
-    logged_in?: Boolean,
-    id?: Number,
-    username: String,
-    email?: String,
-    password?: String
-}
+import { RootState } from '../features/store'
+import { loginUser } from '../features/usersSlice'
 
 export const Login = () => {
-    const [username, setUsername] = useState<String>({} as String)
-    const [password, setPassword] = useState<String>({} as String)
-
     const dispatch: AppDispatch = useDispatch();
-    const { loginUser } = bindActionCreators(actionCreators, dispatch)
-    const user = useSelector((state: RootState) => state.user)
+    const user = useSelector((state: RootState) => state.users)
+
+    const [username, setUsername] = useState<String>(user.username)
+    const [password, setPassword] = useState<String>(user.password)
+
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
 
-        let data = { username, password }
+        let user = { username: username, password: password }
+        setUsername("")
+        setPassword("")
 
-        dispatch(loginUser(data))
+        dispatch(loginUser(user))
     }
 
     return (
         <Container>
             <FormControl>
                 <FormLabel>Username</FormLabel>
-                <Input type='text' placeholder='Username' onChange={(e) => setUsername(e.target.value)} />
+                <Input type='text' placeholder='Username' value={username.toString()} onChange={(e) => setUsername(e.target.value)} />
                 <FormHelperText>Please enter a valid username.</FormHelperText>
                 <FormErrorMessage></FormErrorMessage>
                 {/* 
@@ -52,7 +46,7 @@ export const Login = () => {
                 <FormHelperText>We'll never share your email.</FormHelperText> */}
 
                 <FormLabel>Password</FormLabel>
-                <Input type='text' placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+                <Input type='text' placeholder='Password' value={password.toString()} onChange={(e) => setPassword(e.target.value)} />
                 <FormHelperText>Please set up a secure password.</FormHelperText>
 
                 {/* <FormLabel>Password Confirmation</FormLabel>
