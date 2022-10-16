@@ -8,27 +8,32 @@ import {
     DrawerCloseButton,
     List,
     ListItem,
-    Heading
+    Heading,
+    Button
 } from '@chakra-ui/react';
+import { useDispatch, useSelector } from "react-redux";
 
 import { ChakraLink } from './ChakraLink';
 import { ToggleColorModeButton } from './ToggleColorModeButton';
+import { AppDispatch, RootState } from "../features/store";
+import { logoutUser } from "../features/usersSlice";
 
 interface DrawerListProps {
     onClose?: () => void
 }
 
+const listItems = [
+    {
+        name: 'Home',
+        path: '/'
+    },
+    {
+        name: 'BlogList',
+        path: '/bloglist'
+    }
+]
+
 const DrawerList = ({ onClose }: DrawerListProps) => {
-    const listItems = [
-        {
-            name: 'Home',
-            path: '/'
-        },
-        {
-            name: 'BlogList',
-            path: '/bloglist'
-        }
-    ]
 
     return (
         <List>
@@ -56,6 +61,14 @@ interface AppDrawerProps {
 }
 
 export const AppDrawer = ({ isOpen, onClose }: AppDrawerProps) => {
+
+    const dispatch: AppDispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.users)
+
+    const handleLogout = () => {
+        dispatch(logoutUser())
+    }
+
     return (
         <Drawer size='xs' placement='left' isOpen={isOpen} onClose={onClose}>
             <DrawerOverlay />
@@ -64,7 +77,9 @@ export const AppDrawer = ({ isOpen, onClose }: AppDrawerProps) => {
                 <DrawerCloseButton />
 
                 <DrawerHeader py={8}>
-                    <Heading>Blogs!</Heading>
+                    <Heading>
+                        {user.username ? 'Hi ' + user.username + '!' : 'Hi there!'}
+                    </Heading>
                 </DrawerHeader>
 
                 <DrawerBody>
@@ -72,6 +87,8 @@ export const AppDrawer = ({ isOpen, onClose }: AppDrawerProps) => {
                 </DrawerBody>
 
                 <ToggleColorModeButton />
+
+                <Button onClick={handleLogout}>Log Out</Button>
 
             </DrawerContent>
         </Drawer>

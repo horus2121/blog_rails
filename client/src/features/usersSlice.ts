@@ -12,7 +12,14 @@ const initialState = {
 const usersSlice = createSlice({
     name: 'users',
     initialState,
-    reducers: {},
+    reducers: {
+        logoutUser(state) {
+            state.isLoggedIn = false,
+                state.username = '',
+                state.username = '',
+                state.password = ''
+        }
+    },
     extraReducers: builder => {
         builder.addCase(loginUser.pending, (state, action: any) => {
             console.log("Loading...")
@@ -26,17 +33,17 @@ const usersSlice = createSlice({
             }
         }).addCase(loginUser.rejected, (state, action: any) => {
             console.log("Rejected...")
-        }).addCase(fetchUsers.pending, (state, action: any) => {
+        }).addCase(fetchUser.pending, (state, action: any) => {
             console.log("Rejected...")
-        }).addCase(fetchUsers.fulfilled, (state, action: any) => {
+        }).addCase(fetchUser.fulfilled, (state, action: any) => {
             console.log("Rejected...")
-        }).addCase(fetchUsers.rejected, (state, action: any) => {
+        }).addCase(fetchUser.rejected, (state, action: any) => {
             console.log("Rejected...")
         })
     },
 })
 
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
+export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
     const res = await fetch('/me')
 
     return res
@@ -55,11 +62,10 @@ export const loginUser = createAsyncThunk('users/loginUser', async (user: User) 
         })
     })
     const json = res.json()
-    // const json = res.json
-    // console.log(json)
 
     return json
-}
-)
+})
+
+export const { logoutUser } = usersSlice.actions
 
 export default usersSlice.reducer

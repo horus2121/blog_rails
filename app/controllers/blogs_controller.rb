@@ -11,6 +11,8 @@ class BlogsController < ApplicationController
     end
 
     def show
+        blog = Blog.find(params[:id])
+
         render json: { user: blog.user, blog: blog }, status: :created
     end
 

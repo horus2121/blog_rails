@@ -5,3 +5,9 @@ export interface User {
     email?: String,
     password?: String
 }
+
+export interface Blog {
+    title: String,
+    description: Text,
+    content: Text,
+}

@@ -2,13 +2,9 @@ import { Box, HStack, VStack, Text, Heading, LinkBox, Image } from '@chakra-ui/r
 
 import { ChakraLink, ChakraButtonLink } from '../ChakraLink';
 
-import { Blog } from './BlogPreviewList';
+import { Blog } from '../../types';
 
-interface BlogPreviewCardProps {
-    blog: Blog
-}
-
-export const BlogPreviewCard = ({ blog }: BlogPreviewCardProps) => {
+export const BlogPreviewCard = (blog: any) => {
     return (
         <VStack as={LinkBox} spacing='1rem' mb='2rem'>
             <Box>

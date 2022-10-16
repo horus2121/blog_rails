@@ -1,29 +1,11 @@
 import { Box, Flex, Heading } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../features/store';
 
 import { BlogPreviewCard } from './BlogPreviewCard';
 
-export interface Blog {
-    title: String,
-    description: Text,
-    content: Text,
-}
-
 export const BlogPreviewList = () => {
-    const [blogList, setBlogList] = useState<Blog[]>([])
-
-    useEffect(() => {
-
-        const fetchBlogList = async () => {
-            const res = await fetch('/blogs', { mode: 'no-cors' })
-            const json = res.json()
-            return json
-        }
-        console.log(blogList)
-
-        fetchBlogList().then(json => setBlogList(json))
-
-    }, [])
+    const blog = useSelector((state: RootState) => state.blogs)
 
     return (
         <Box mt={8} mb={16}>
@@ -38,9 +20,7 @@ export const BlogPreviewList = () => {
                 </Heading>
             </Flex>
 
-            {blogList.map((blog, index) => (
-                <BlogPreviewCard key={index} blog={blog} />
-            ))}
+            <BlogPreviewCard blog={blog} />
         </Box>
     )
 }
