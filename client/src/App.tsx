@@ -19,10 +19,10 @@ export const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/login' element={<Login />} />
         <Route path='/' element={<Layout />}>
           <Route index element={user.isLoggedIn ? <Home /> : <Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
           <Route path='me' element={user.isLoggedIn ? <Profile /> : <Login />} />
           <Route path='bloglist' element={user.isLoggedIn ? <BlogList /> : <Login />} />
           <Route path='blog' element={user.isLoggedIn ? <Blog /> : <Login />} />

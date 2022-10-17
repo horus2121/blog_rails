@@ -6,7 +6,8 @@ const initialState = {
     isLoggedIn: false,
     username: '',
     email: '',
-    password: ''
+    password: '',
+    passwordConfirmation: ''
 }
 
 const usersSlice = createSlice({
@@ -14,10 +15,11 @@ const usersSlice = createSlice({
     initialState,
     reducers: {
         logoutUser(state) {
-            state.isLoggedIn = false,
-                state.username = '',
-                state.username = '',
-                state.password = ''
+            state.isLoggedIn = false
+            state.username = ''
+            state.email = ''
+            state.password = ''
+            state.passwordConfirmation = ''
         }
     },
     extraReducers: builder => {
@@ -25,29 +27,32 @@ const usersSlice = createSlice({
             console.log("Loading...")
         }).addCase(loginUser.fulfilled, (state, action: any) => {
             console.log("Fulfilled...")
-            const { username, email } = action.payload.user
             if (!action.payload.errors) {
+                const { username, email } = action.payload.user
+
                 state.isLoggedIn = true
                 state.username = username
                 state.email = email
             }
         }).addCase(loginUser.rejected, (state, action: any) => {
             console.log("Rejected...")
-        }).addCase(fetchUser.pending, (state, action: any) => {
-            console.log("Rejected...")
-        }).addCase(fetchUser.fulfilled, (state, action: any) => {
-            console.log("Rejected...")
-        }).addCase(fetchUser.rejected, (state, action: any) => {
+        }).addCase(SignUpUser.pending, (state, action: any) => {
+            console.log("Loading...")
+        }).addCase(SignUpUser.fulfilled, (state, action: any) => {
+            console.log("Fullfilled...")
+            if (!action.payload.errors) {
+                const { username, email } = action.payload.user
+
+                state.isLoggedIn = true
+                state.username = username
+                state.email = email
+            }
+        }).addCase(SignUpUser.rejected, (state, action: any) => {
             console.log("Rejected...")
         })
     },
 })
 
-export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
-    const res = await fetch('/me')
-
-    return res
-})
 
 export const loginUser = createAsyncThunk('users/loginUser', async (user: User) => {
 
@@ -59,6 +64,27 @@ export const loginUser = createAsyncThunk('users/loginUser', async (user: User) 
         body: JSON.stringify({
             username: user.username,
             password: user.password
+        })
+    })
+    const json = res.json()
+
+    return json
+})
+
+export const SignUpUser = createAsyncThunk('users/signUpUser', async (user: User) => {
+
+    const res = await fetch('/signup', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            user: {
+                username: user.username,
+                email: user.email,
+                password: user.password,
+                password_confirmation: user.password_confirmation
+            }
         })
     })
     const json = res.json()

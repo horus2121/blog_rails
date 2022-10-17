@@ -88,7 +88,9 @@ export const AppDrawer = ({ isOpen, onClose }: AppDrawerProps) => {
 
                 <ToggleColorModeButton />
 
-                <Button onClick={handleLogout}>Log Out</Button>
+                {user.isLoggedIn &&
+                    <Button onClick={handleLogout}>Log Out</Button>
+                }
 
             </DrawerContent>
         </Drawer>

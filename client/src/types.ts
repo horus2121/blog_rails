@@ -3,7 +3,8 @@ export interface User {
     id?: Number,
     username: String,
     email?: String,
-    password?: String
+    password?: String,
+    password_confirmation?: String
 }
 
 export interface Blog {
