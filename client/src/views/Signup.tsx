@@ -23,8 +23,8 @@ export const Signup = () => {
 
     const [username, setUsername] = useState(user.username)
     const [email, setEmail] = useState(user.email)
-    const [password, setPassword] = useState(user.password)
-    const [passwordConfirmation, setPasswordConfirmation] = useState(user.password)
+    const [password, setPassword] = useState('')
+    const [passwordConfirmation, setPasswordConfirmation] = useState('')
 
     const handleSubmit = (event: any) => {
         event.preventDefault();

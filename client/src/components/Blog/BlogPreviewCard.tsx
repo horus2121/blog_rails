@@ -3,8 +3,15 @@ import { Box, HStack, VStack, Text, Heading, LinkBox, Image } from '@chakra-ui/r
 import { ChakraLink, ChakraButtonLink } from '../ChakraLink';
 
 import { Blog } from '../../types';
+import { useParams } from 'react-router-dom';
 
-export const BlogPreviewCard = (blog: any) => {
+interface Props {
+    blog: Blog
+}
+
+export const BlogPreviewCard = ({ blog }: Props) => {
+    let { id } = useParams()
+
     return (
         <VStack as={LinkBox} spacing='1rem' mb='2rem'>
             <Box>
@@ -17,7 +24,7 @@ export const BlogPreviewCard = (blog: any) => {
 
             <Heading>
             </Heading>
-            <ChakraLink ChakraComponent={Heading} href='/something' overlay>
+            <ChakraLink ChakraComponent={Heading} href={'/blog/' + blog.id} overlay>
                 {blog.title}
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </ChakraLink>
@@ -29,13 +36,19 @@ export const BlogPreviewCard = (blog: any) => {
             </HStack>
 
             <Text noOfLines={3}>
-                {blog.description + ""}
+                {blog.description}
             </Text>
+
+            {id &&
+                <Text>
+                    {blog.content}
+                </Text>
+            }
 
             {/* <Button textTransform='uppercase'>
                 Read More
             </Button> */}
-            <ChakraButtonLink href='/NoPage'>Read more</ChakraButtonLink>
+            <ChakraButtonLink href={'/blog/' + blog.id}>Read more</ChakraButtonLink>
         </VStack>
 
     )

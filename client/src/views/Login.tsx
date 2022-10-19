@@ -21,8 +21,8 @@ export const Login = () => {
     const navigate = useNavigate()
     const user = useSelector((state: RootState) => state.users)
 
-    const [username, setUsername] = useState<String>(user.username)
-    const [password, setPassword] = useState<String>(user.password)
+    const [username, setUsername] = useState<string>(user.username)
+    const [password, setPassword] = useState<string>('')
 
 
     const handleLogin = (event: any) => {
@@ -52,7 +52,7 @@ export const Login = () => {
                 <FormHelperText>We'll never share your email.</FormHelperText> */}
 
                 <FormLabel>Password</FormLabel>
-                <Input type='text' placeholder='Password' value={password.toString()} onChange={(e) => setPassword(e.target.value)} />
+                <Input type='password' placeholder='Password' value={password.toString()} onChange={(e) => setPassword(e.target.value)} />
                 <FormHelperText>Please enter your password.</FormHelperText>
 
                 <Button

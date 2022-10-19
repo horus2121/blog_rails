@@ -17,6 +17,7 @@ import { ChakraLink } from './ChakraLink';
 import { ToggleColorModeButton } from './ToggleColorModeButton';
 import { AppDispatch, RootState } from "../features/store";
 import { logoutUser } from "../features/usersSlice";
+import { flushBlogs } from "../features/blogsSlice";
 
 interface DrawerListProps {
     onClose?: () => void
@@ -28,8 +29,12 @@ const listItems = [
         path: '/'
     },
     {
-        name: 'BlogList',
+        name: 'Blog List',
         path: '/bloglist'
+    },
+    {
+        name: 'New Blog',
+        path: '/newblog'
     }
 ]
 
@@ -67,6 +72,7 @@ export const AppDrawer = ({ isOpen, onClose }: AppDrawerProps) => {
 
     const handleLogout = () => {
         dispatch(logoutUser())
+        dispatch(flushBlogs())
     }
 
     return (

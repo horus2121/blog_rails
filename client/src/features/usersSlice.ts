@@ -2,12 +2,22 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { User } from "../types";
 
-const initialState = {
+interface State {
+    isLoggedIn: boolean,
+    id: number | null,
+    username: string,
+    email: string,
+    blogPosts: number[],
+    comments: number[]
+}
+
+const initialState: State = {
     isLoggedIn: false,
+    id: null,
     username: '',
     email: '',
-    password: '',
-    passwordConfirmation: ''
+    blogPosts: [],
+    comments: []
 }
 
 const usersSlice = createSlice({
@@ -16,38 +26,44 @@ const usersSlice = createSlice({
     reducers: {
         logoutUser(state) {
             state.isLoggedIn = false
+            state.id = null
             state.username = ''
             state.email = ''
-            state.password = ''
-            state.passwordConfirmation = ''
+            state.blogPosts = []
+            state.comments = []
         }
     },
     extraReducers: builder => {
-        builder.addCase(loginUser.pending, (state, action: any) => {
+        builder.addCase(loginUser.pending, () => {
             console.log("Loading...")
-        }).addCase(loginUser.fulfilled, (state, action: any) => {
+        }).addCase(loginUser.fulfilled, (state, action) => {
             console.log("Fulfilled...")
             if (!action.payload.errors) {
-                const { username, email } = action.payload.user
+                const { id, username, email } = action.payload.user
+                const { blogs, comments } = action.payload
 
                 state.isLoggedIn = true
+                state.id = id
                 state.username = username
                 state.email = email
+                blogs?.map((blog: any) => state.blogPosts.push(blog.id))
+                comments?.map((comment: any) => state.comments.push(comment.id))
             }
-        }).addCase(loginUser.rejected, (state, action: any) => {
+        }).addCase(loginUser.rejected, () => {
             console.log("Rejected...")
-        }).addCase(SignUpUser.pending, (state, action: any) => {
+        }).addCase(SignUpUser.pending, () => {
             console.log("Loading...")
-        }).addCase(SignUpUser.fulfilled, (state, action: any) => {
+        }).addCase(SignUpUser.fulfilled, (state, action) => {
             console.log("Fullfilled...")
             if (!action.payload.errors) {
-                const { username, email } = action.payload.user
+                const { id, username, email } = action.payload.user
 
                 state.isLoggedIn = true
+                state.id = id
                 state.username = username
                 state.email = email
             }
-        }).addCase(SignUpUser.rejected, (state, action: any) => {
+        }).addCase(SignUpUser.rejected, () => {
             console.log("Rejected...")
         })
     },

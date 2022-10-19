@@ -1,14 +1,15 @@
 export interface User {
-    logged_in?: Boolean,
-    id?: Number,
-    username: String,
-    email?: String,
-    password?: String,
-    password_confirmation?: String
+    logged_in?: boolean,
+    id?: number,
+    username: string,
+    email?: string,
+    password?: string,
+    password_confirmation?: string
 }
 
 export interface Blog {
-    title: String,
-    description: Text,
-    content: Text,
+    id?: number | null,
+    title: string,
+    description: string,
+    content: string,
 }

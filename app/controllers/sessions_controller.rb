@@ -13,7 +13,9 @@ class SessionsController < ApplicationController
 
             render json: { 
                 logged_in: true, 
-                user: user 
+                user: user,
+                blogs: user.blogs,
+                comments: user.comments 
             }, 
                 status: :created
         else

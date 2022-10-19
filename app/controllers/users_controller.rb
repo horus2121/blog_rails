@@ -15,9 +15,9 @@ class UsersController < ApplicationController
     end
 
     def show
-        user = User.find_by(id: session[:user_id])
+        user = User.find_by(id: session[:current_user_id])
 
-        render json: { user: user }, status: :created
+        render json: { user: user, blogs: user.blogs }, status: :created
     end
 
     private

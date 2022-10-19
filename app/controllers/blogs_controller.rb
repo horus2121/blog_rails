@@ -46,8 +46,18 @@ class BlogsController < ApplicationController
         blog = Blog.find(params[:id])
     end
 
+    def set_user
+        user = User.find_by(id: session[:current_user_id])
+    end
+
     def blog_params
-        params.require(:blog).permit(:title, :content)
+        user = set_user
+        user_id = user.id
+
+        params
+        .require(:blog)
+        .permit(:user_id, :title, :description, :content)
+        .merge(user_id: user_id)
     end
 
     def render_record_not_found
