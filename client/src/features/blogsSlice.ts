@@ -40,6 +40,8 @@ const blogsSlice = createSlice({
                 state.content = content
             }
         }).addCase(addBlog.fulfilled, (state) => state)
+            .addCase(editBlog.fulfilled, (state) => state)
+            .addCase(deleteBlog.fulfilled, (state) => state)
     }
 })
 
@@ -66,6 +68,35 @@ export const addBlog = createAsyncThunk('blogs/addBlog', async (blog: Blog) => {
         })
     })
     const json = res.json()
+
+    return json
+})
+
+export const editBlog = createAsyncThunk('blogs/editBlog', async (blog: Blog) => {
+
+    const res = await fetch('/blogs/' + blog.id, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            blog: {
+                title: blog.title,
+                description: blog.description,
+                content: blog.content
+            }
+        })
+    })
+    const json = res.json()
+
+    return json
+})
+
+export const deleteBlog = createAsyncThunk('blogs/deleteBlog', async (blogID: number) => {
+
+    const res = await fetch('/blogs/' + blogID, { method: "DELETE" })
+    const json = res.json()
+    console.log(json)
 
     return json
 })

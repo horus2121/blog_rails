@@ -13,6 +13,7 @@ import { NoPage } from './views/NoPage';
 import { Signup } from './views/Signup';
 import { Profile } from './views/Profile';
 import { NewBlog } from './views/NewBlog';
+import { EditPost } from './views/EditPost';
 
 export const App = () => {
   const user = useSelector((state: RootState) => state.users)
@@ -27,6 +28,7 @@ export const App = () => {
           <Route path='me' element={user.isLoggedIn ? <Profile /> : <Login />} />
           <Route path='bloglist' element={user.isLoggedIn ? <BlogList /> : <Login />} />
           <Route path='blog/:id' element={user.isLoggedIn ? <Blog /> : <Login />} />
+          <Route path='blog/:id/edit' element={user.isLoggedIn ? <EditPost /> : <Login />} />
           <Route path='newblog' element={user.isLoggedIn ? <NewBlog /> : <Login />} />
           <Route path='*' element={user.isLoggedIn ? <NoPage /> : <Login />} />
         </Route>

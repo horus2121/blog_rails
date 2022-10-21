@@ -27,6 +27,8 @@ class BlogsController < ApplicationController
     end
 
     def update
+        blog = Blog.find(params[:id])
+
         if blog.update(blog_params)
             render json: { user: blog.user, blog: blog }, status: :created
         else
@@ -35,6 +37,7 @@ class BlogsController < ApplicationController
     end
 
     def destroy
+        blog = Blog.find(params[:id])
         blog.destroy
 
         render json: { success: "Blog destroyed."}, status: :see_other

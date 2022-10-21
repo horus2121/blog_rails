@@ -1,16 +1,32 @@
-import { Box, HStack, VStack, Text, Heading, LinkBox, Image } from '@chakra-ui/react';
+import { Box, HStack, VStack, Text, Heading, LinkBox, Image, Button } from '@chakra-ui/react';
 
 import { ChakraLink, ChakraButtonLink } from '../ChakraLink';
 
 import { Blog } from '../../types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../features/store';
+import { deleteBlog } from '../../features/blogsSlice';
 
 interface Props {
     blog: Blog
 }
 
 export const BlogPreviewCard = ({ blog }: Props) => {
+
+    const dispatch: AppDispatch = useDispatch()
+    const navigate = useNavigate()
     let { id } = useParams()
+
+    const handleDeletePost = (e: any) => {
+        id = e.target.value
+
+        if (id) {
+            dispatch(deleteBlog(+id))
+        }
+
+        navigate('/bloglist')
+    }
 
     return (
         <VStack as={LinkBox} spacing='1rem' mb='2rem'>
@@ -48,7 +64,15 @@ export const BlogPreviewCard = ({ blog }: Props) => {
             {/* <Button textTransform='uppercase'>
                 Read More
             </Button> */}
-            <ChakraButtonLink href={'/blog/' + blog.id}>Read more</ChakraButtonLink>
+            {id ?
+                <ChakraButtonLink href={'/blog/' + blog.id + '/edit'}>Edit Post</ChakraButtonLink>
+                :
+                <ChakraButtonLink href={'/blog/' + blog.id}>Read More</ChakraButtonLink>
+            }
+
+            {id &&
+                <Button value={id} onClick={handleDeletePost}>Delete Post</Button>
+            }
         </VStack>
 
     )
